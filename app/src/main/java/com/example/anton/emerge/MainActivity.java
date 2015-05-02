@@ -18,6 +18,8 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import org.json.JSONObject;
+
 
 public class MainActivity extends ActionBarActivity {
     private TextView mainTextView;
@@ -57,13 +59,27 @@ public class MainActivity extends ActionBarActivity {
                 });
     }
 
-    private void startNewIntent(Profile elUsero){
-        Intent i = new Intent(this, Camera.class);
+    private void startNewIntent(Profile elUsero) {
 
-        i.putExtra("firstName", elUsero.getFirstName());
-        i.putExtra("lastName", elUsero.getLastName());
-        i.putExtra("picURI", elUsero.getProfilePictureUri(1500,1500).toString());
-        startActivityForResult(i, request_code);
+
+        if (Profile.getCurrentProfile().getId() == "anton.relin")
+        {
+            Intent i = new Intent(this, findFriend.class);
+            i.putExtra("firstName", elUsero.getFirstName());
+            i.putExtra("lastName", elUsero.getLastName());
+            i.putExtra("picURI", elUsero.getProfilePictureUri(1500,1500).toString());
+            startActivityForResult(i, request_code);
+         }
+
+        else {
+            Intent i = new Intent(this, Camera.class);
+            i.putExtra("firstName", elUsero.getFirstName());
+            i.putExtra("lastName", elUsero.getLastName());
+            i.putExtra("picURI", elUsero.getProfilePictureUri(1500,1500).toString());
+            startActivityForResult(i, request_code);
+        }
+
+
     }
 
     @Override
