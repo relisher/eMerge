@@ -60,7 +60,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void startNewIntent(Profile elUsero){
-        Intent i = new Intent(this, MainMenuTest.class);
+        Intent i = new Intent(this, Camera.class);
 
         i.putExtra("firstName", elUsero.getFirstName());
         i.putExtra("lastName", elUsero.getLastName());
