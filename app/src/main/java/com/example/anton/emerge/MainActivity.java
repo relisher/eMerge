@@ -2,11 +2,10 @@ package com.example.anton.emerge;
 
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.CallbackManager;
@@ -56,11 +55,6 @@ public class MainActivity extends ActionBarActivity {
                         // App code
                     }
                 });
-    }
-
-    public void testButton(View view){
-        Intent i = new Intent(this, HomePage.class);
-        startActivity(i);
     }
 
     private void startNewIntent(Profile elUsero){

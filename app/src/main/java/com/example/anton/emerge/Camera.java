@@ -31,7 +31,7 @@ public class Camera extends Activity {
     public int TAKE_PICTURE = 1;
     private ImageView image_view;
     private static final int CAMERA_REQUEST = 1888;
-    String fileName = "capturedImage.jpg";
+    String fileName = "person.jpg";
     private static Uri mCapturedImageURI;
     private String selectedImagePath;
 
@@ -50,6 +50,7 @@ public class Camera extends Activity {
 
             public void onClick(View arg0) {
                 Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
+                cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
             }
         });
@@ -64,7 +65,7 @@ public class Camera extends Activity {
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 photo.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
-                String newImageName = "food.jpg";
+                String newImageName = "person.jpg";
                 File f = new File(Environment.getExternalStorageDirectory()
                         + File.separator + newImageName);
                 if(!f.exists()){
@@ -104,7 +105,7 @@ public class Camera extends Activity {
                 //write the bytes in file
 
 
-                Intent cameraIntent = new Intent(this, PictureInfo.class);
+                Intent cameraIntent = new Intent(this, Congrats.class);
                 startActivity(cameraIntent);
             }
             super.onActivityResult(requestCode, resultCode, data);
