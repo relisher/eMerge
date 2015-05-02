@@ -25,15 +25,7 @@ public class HomePage extends ActionBarActivity {
         startActivity(i);
     }
 
-    public void pictureInfo(View view){
-        Intent i = new Intent(this, PictureInfo.class);
-        startActivity(i);
-    }
 
-    public void pictureViewActivity(View view){
-        Intent i = new Intent(this, PictureViewActivity.class);
-        startActivity(i);
-    }
 
 
 

@@ -58,12 +58,22 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void startNewIntent(Profile elUsero){
-        Intent i = new Intent(this, Camera.class);
+        if (Profile.getCurrentProfile().getId() == "anton.relin")
+        {
+            Intent i = new Intent(this, HomePage.class);
+            i.putExtra("firstName", elUsero.getFirstName());
+            i.putExtra("lastName", elUsero.getLastName());
+            i.putExtra("picURI", elUsero.getProfilePictureUri(1500,1500).toString());
+            startActivityForResult(i, request_code);
+        }
 
-        i.putExtra("firstName", elUsero.getFirstName());
-        i.putExtra("lastName", elUsero.getLastName());
-        i.putExtra("picURI", elUsero.getProfilePictureUri(1500,1500).toString());
-        startActivityForResult(i, request_code);
+        else {
+            Intent i = new Intent(this, Camera.class);
+            i.putExtra("firstName", elUsero.getFirstName());
+            i.putExtra("lastName", elUsero.getLastName());
+            i.putExtra("picURI", elUsero.getProfilePictureUri(1500,1500).toString());
+            startActivityForResult(i, request_code);
+        }
     }
 
     @Override
