@@ -50,12 +50,10 @@ public class MainActivity extends ActionBarActivity {
                     @Override
                     public void onCancel() {
                         // App code
-                        mainTextView.setText("Status: Logging in cancelled");
                     }
                     @Override
                     public void onError(FacebookException exception) {
                         // App code
-                        mainTextView.setText("Status: EXCEPTION: " + exception.toString());
                     }
                 });
     }
