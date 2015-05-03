@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -130,15 +129,11 @@ public class MainActivity extends Activity {
             @Override
             public void onSuccess(String response) {
                 if (response.contains(userId)) {
-                    Toast.makeText(getApplicationContext(), "succeeded: " + response,
-                            Toast.LENGTH_LONG).show();
                     inDB = true;
                     Intent homeIntent = new Intent(MainActivity.this, HomePage.class);
                     homeIntent.putExtra("picURI", picUri);
                     startActivityForResult(homeIntent, request_code);
                 } else {
-                    Toast.makeText(getApplicationContext(), "failed: " + response,
-                            Toast.LENGTH_LONG).show();
                     Log.d("KAIROS DEMO", response);
                     Intent cameraIntent = new Intent(MainActivity.this, CameraInit.class);
                     cameraIntent.putExtra("picURI", picUri);
@@ -148,8 +143,6 @@ public class MainActivity extends Activity {
 
             @Override
             public void onFail(String response) {
-                Toast.makeText(getApplicationContext(), "failed to connect" + MainActivity.userLink.toString(),
-                        Toast.LENGTH_LONG).show();
                 Log.d("KAIROS DEMO", response);
             }
         };

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.kairos.KairosListener;
 
@@ -34,12 +35,14 @@ public class SearchActivity extends Activity {
 
                 @Override
                 public void onSuccess(String response) {
+                    Toast.makeText(getApplicationContext(), "Loading...",
+                            Toast.LENGTH_LONG).show();
                     Log.d("Joe",response);
                     try {
                         JSONObject obj = new JSONObject(response);
 
                         String fbId = obj.getJSONArray("images").getJSONObject(0).getJSONObject("transaction").getString("subject");
-                        Log.d("Joe",fbId);
+                        Log.d("Joe", fbId);
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://facebook.com/"+fbId));
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.setPackage("com.android.chrome");
@@ -50,7 +53,11 @@ public class SearchActivity extends Activity {
                             intent.setPackage(null);
                             startActivity(intent);
                         }
-                    }catch(JSONException e){Log.d("Joe",e.toString());}
+                    }catch(JSONException e){
+                        Log.d("Joe",e.toString());
+                        Toast.makeText(getApplicationContext(), "No match found, please try again",
+                                Toast.LENGTH_LONG).show();
+                    }
 
 
                 }
@@ -64,7 +71,6 @@ public class SearchActivity extends Activity {
 
 
             try {
-
                 // Fine-grained Example:
                 // This example uses a bitmap image and also optional parameters
                 Intent intent = getIntent();

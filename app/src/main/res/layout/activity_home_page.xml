@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Profile"
-            android:id="@+id/profile" />
+            android:id="@+id/profile"
+            android:textColor="#fff"/>
 
         <LinearLayout
             android:layout_width="fill_parent"

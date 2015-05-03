@@ -69,8 +69,9 @@ public class Camera extends Activity {
             if (requestCode == CAMERA_REQUEST) {
                 photo = (Bitmap) data.getExtras().get("data");
             }
+            else return;
 
-            if(HomePage.enroll == true){
+            if(HomePage.enroll){
 
                 Bitmap image = photo;
                 try

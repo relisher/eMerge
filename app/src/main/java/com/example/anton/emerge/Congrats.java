@@ -48,8 +48,6 @@ public class Congrats extends Activity {
             public void onSuccess(String response) {
                 // your code here!
                 Log.d("KAIROS DEMO", response);
-                Toast.makeText(getApplicationContext(), "THIS BITCH WORKED!!! =) " + MainActivity.userLink.toString(),
-                        Toast.LENGTH_LONG).show();
 
 /* chrome navigation
                 Intent intent = new Intent(Intent.ACTION_VIEW, MainActivity.userLink);
@@ -69,7 +67,7 @@ public class Congrats extends Activity {
             public void onFail(String response) {
                 // your code here!
                 Log.d("KAIROS DEMO", response);
-                Toast.makeText(getApplicationContext(), "THIS BITCH FAILED!!! =)",
+                Toast.makeText(getApplicationContext(), "Failed",
                         Toast.LENGTH_LONG).show();
             }
         };
