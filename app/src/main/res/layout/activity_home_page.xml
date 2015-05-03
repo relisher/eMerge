@@ -28,36 +28,55 @@
             android:text="Profile"
             android:id="@+id/profile" />
 
-        <ImageButton
-            android:id="@+id/imageButton1"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:src="@drawable/add_friend"
-            android:background="@android:color/transparent"
-            android:onClick="addFriend"/>
-
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal"
+            >
+            <ImageButton
+                android:id="@+id/imageButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add_friend"
+                android:background="@android:color/transparent"
+                android:onClick="addFriend"/>
+            />
+        </LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_gravity="center_horizontal" />
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Remove Face"
-            android:id="@+id/removeFace"
-            android:onClick="removeFace"
+            android:text="Add Friend From Gallery"
+            android:id="@+id/galleryFriend"
+            android:onClick="galleryFriend"
             android:background="#e6e6e6"/>
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="10dp"
             android:layout_gravity="center_horizontal" />
+
 
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Update Photo"
+            android:text="Add Photo To Improve Accuracy"
             android:id="@+id/updatePhoto"
             android:onClick="updatePhoto"
             android:background="#e6e6e6"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_gravity="center_horizontal" />
+
 
     </LinearLayout>
 

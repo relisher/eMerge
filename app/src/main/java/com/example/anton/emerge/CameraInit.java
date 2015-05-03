@@ -28,7 +28,6 @@ public class CameraInit extends Activity {
         super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_camera);
 
-
             button_1 = (Button) findViewById(R.id.button1);
 
             button_1.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +50,7 @@ public class CameraInit extends Activity {
                 photo = (Bitmap) data.getExtras().get("data");
             }
             //write the bytes in file
+
                 MainActivity.inDB = true;
                 Intent cameraIntent = new Intent(this, Congrats.class);
                 cameraIntent.putExtra("BitmapImage", photo);

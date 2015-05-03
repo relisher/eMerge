@@ -5,8 +5,16 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.kairos.KairosListener;
+
+import org.json.JSONException;
+
+import java.io.UnsupportedEncodingException;
 
 
 public class Camera extends Activity {
@@ -19,6 +27,7 @@ public class Camera extends Activity {
     //String fileName = "person.jpg";
     private static Uri mCapturedImageURI;
     private String selectedImagePath;
+    KairosListener listener;
 
     /**
      * Called when the activity is first created.
@@ -29,6 +38,26 @@ public class Camera extends Activity {
             Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
             cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
             startActivityForResult(cameraIntent, CAMERA_REQUEST);
+
+        // Create an instance of the KairosListener
+        listener = new KairosListener() {
+
+            @Override
+            public void onSuccess(String response) {
+                Intent hp = new Intent(Camera.this, HomePage.class);
+                startActivity(hp);
+                Log.d("KAIROS DEMO", response);
+            }
+
+            @Override
+            public void onFail(String response) {
+                // your code here!
+                Toast.makeText(getApplicationContext(), "Failed: " + response,
+                        Toast.LENGTH_LONG).show();
+                Log.d("KAIROS DEMO", response);
+            }
+        };
+
     }
 
 
@@ -40,9 +69,24 @@ public class Camera extends Activity {
             if (requestCode == CAMERA_REQUEST) {
                 photo = (Bitmap) data.getExtras().get("data");
             }
+
+            if(HomePage.enroll == true){
+
+                Bitmap image = photo;
+                try
+                {
+                    String subjectId = MainActivity.userId;
+                    String galleryId = "friends1";
+                    MainActivity.myKairos.enroll(image, subjectId, galleryId, null, null, null, listener);
+                }
+                catch(JSONException e1){}catch(UnsupportedEncodingException e){}
+            }
+        else {
                 Intent searchActivity = new Intent(this, SearchActivity.class);
                 searchActivity.putExtra("BitmapImage", photo);
                 startActivity(searchActivity);
+            }
+            HomePage.enroll = false;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

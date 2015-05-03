@@ -1,9 +1,10 @@
 package com.example.anton.emerge;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +22,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * Created by anton on 5/2/2015.
  */
-public class Congrats extends ActionBarActivity {
+public class Congrats extends Activity {
     private Button button_1;
 
     @Override
@@ -35,7 +36,7 @@ public class Congrats extends ActionBarActivity {
     Intent intent = getIntent();
     Bitmap image = (Bitmap) intent.getParcelableExtra("BitmapImage");
     String subjectId = MainActivity.userId;
-    String galleryId = "friends";
+    String galleryId = "friends1";
     String selector = "FULL";
     String multipleFaces = "false";
     String minHeadScale = "0.25";
@@ -74,7 +75,7 @@ public class Congrats extends ActionBarActivity {
         };
 try
 {
-    MainActivity.myKairos.enroll(image, subjectId, galleryId, selector, multipleFaces, minHeadScale, listener);
+    MainActivity.myKairos.enroll(image, subjectId, galleryId, null, null, null, listener);
 }
 catch(JSONException e1){}catch(UnsupportedEncodingException e){}
 
@@ -111,6 +112,12 @@ catch(JSONException e1){}catch(UnsupportedEncodingException e){}
     @Override
     protected void onResume() {
         super.onResume();
+        Resources res = getResources();
+        // set authentication
+        String app_id = res.getString(R.string.kairos_app_id);
+        String api_key = res.getString(R.string.kairos_app_key);
+        MainActivity.myKairos.setAuthentication(this, app_id, api_key);
+
         // Logs 'install' and 'app activate' App Events.
         AppEventsLogger.activateApp(this);
     }

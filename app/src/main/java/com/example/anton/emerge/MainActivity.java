@@ -1,6 +1,7 @@
 package com.example.anton.emerge;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,11 +11,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -33,7 +34,7 @@ import org.json.JSONException;
 import java.io.UnsupportedEncodingException;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
     private TextView mainTextView;
     private static final int request_code = 5;
     public CallbackManager mCallbackManager;
@@ -60,8 +61,8 @@ public class MainActivity extends ActionBarActivity {
             try {
                 AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 
-                alertDialog.setTitle("Info");
-                alertDialog.setMessage("Internet not available, Cross check your internet connectivity and try again");
+                alertDialog.setTitle("Error");
+                alertDialog.setMessage("Internet not available, please check your internet connectivity and try again.");
                 alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
                 alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -129,11 +130,15 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onSuccess(String response) {
                 if (response.contains(userId)) {
+                    Toast.makeText(getApplicationContext(), "succeeded: " + response,
+                            Toast.LENGTH_LONG).show();
                     inDB = true;
                     Intent homeIntent = new Intent(MainActivity.this, HomePage.class);
                     homeIntent.putExtra("picURI", picUri);
                     startActivityForResult(homeIntent, request_code);
                 } else {
+                    Toast.makeText(getApplicationContext(), "failed: " + response,
+                            Toast.LENGTH_LONG).show();
                     Log.d("KAIROS DEMO", response);
                     Intent cameraIntent = new Intent(MainActivity.this, CameraInit.class);
                     cameraIntent.putExtra("picURI", picUri);
@@ -143,12 +148,32 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onFail(String response) {
-                // your code here!
+                Toast.makeText(getApplicationContext(), "failed to connect" + MainActivity.userLink.toString(),
+                        Toast.LENGTH_LONG).show();
                 Log.d("KAIROS DEMO", response);
             }
         };
 
+        if(elUsero==null)
+        {
+            try {
+                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 
+                alertDialog.setTitle("Error");
+                alertDialog.setMessage("Facebook link failed, please try again.");
+                alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+
+                    }
+                });
+
+                alertDialog.show();
+            } catch (Exception e) {
+                Log.d("", "Show Dialog: " + e.getMessage());
+            }
+        }
         firstName = elUsero.getFirstName();
         lastName = elUsero.getLastName();
         userLink = elUsero.getLinkUri();
@@ -158,7 +183,7 @@ public class MainActivity extends ActionBarActivity {
         try {
 
             // List out all subjects in a given gallery
-            String galleryId = "friends";
+            String galleryId = "friends1";
             myKairos.listSubjectsForGallery(galleryId, listener);
 
         } catch (JSONException e1) {
@@ -192,6 +217,12 @@ public class MainActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         // Logs 'install' and 'app activate' App Events.
+        Resources res = getResources();
+        // set authentication
+        String app_id = res.getString(R.string.kairos_app_id);
+        String api_key = res.getString(R.string.kairos_app_key);
+        MainActivity.myKairos.setAuthentication(this, app_id, api_key);
+
         AppEventsLogger.activateApp(this);
     }
 

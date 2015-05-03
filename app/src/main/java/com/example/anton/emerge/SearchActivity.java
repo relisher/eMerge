@@ -1,9 +1,12 @@
 package com.example.anton.emerge;
 
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,13 +15,14 @@ import android.view.View;
 import com.kairos.KairosListener;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
 /**
  * Created by Josh on 5/3/2015.
  */
-public class SearchActivity extends ActionBarActivity {
+public class SearchActivity extends Activity {
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,24 @@ public class SearchActivity extends ActionBarActivity {
                 @Override
                 public void onSuccess(String response) {
                     Log.d("Joe",response);
+                    try {
+                        JSONObject obj = new JSONObject(response);
+
+                        String fbId = obj.getJSONArray("images").getJSONObject(0).getJSONObject("transaction").getString("subject");
+                        Log.d("Joe",fbId);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://facebook.com/"+fbId));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.setPackage("com.android.chrome");
+                        try {
+                            startActivity(intent);
+                        } catch (ActivityNotFoundException ex) {
+                            // Chrome browser presumably not installed so allow user to choose instead
+                            intent.setPackage(null);
+                            startActivity(intent);
+                        }
+                    }catch(JSONException e){Log.d("Joe",e.toString());}
+
+
                 }
 
                 @Override
@@ -47,9 +69,9 @@ public class SearchActivity extends ActionBarActivity {
                 // This example uses a bitmap image and also optional parameters
                 Intent intent = getIntent();
                 Bitmap image = (Bitmap) intent.getParcelableExtra("BitmapImage");
-                String galleryId = "friends";
+                String galleryId = "friends1";
                 String selector = "FULL";
-                String threshold = "0.75";
+                String threshold = "0.70";
                 String minHeadScale = "0.25";
                 String maxNumResults = "25";
                 MainActivity.myKairos.recognize(image,
@@ -63,9 +85,11 @@ public class SearchActivity extends ActionBarActivity {
             } catch (JSONException e1) {
             } catch (UnsupportedEncodingException e) {
             }
+
             Intent homeIntent = new Intent(this, HomePage.class);
-            homeIntent.putExtra("picURI", "x");
-            startActivityForResult(homeIntent, 6);
+            startActivity(homeIntent);
+            //homeIntent.putExtra("picURI", "x");
+            //startActivityForResult(homeIntent, 6);
         }
 
     @Override
@@ -95,6 +119,12 @@ public class SearchActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Resources res = getResources();
+        // set authentication
+        String app_id = res.getString(R.string.kairos_app_id);
+        String api_key = res.getString(R.string.kairos_app_key);
+        MainActivity.myKairos.setAuthentication(this, app_id, api_key);
+
         // Logs 'install' and 'app activate' App Events.
     }
 
@@ -103,5 +133,6 @@ public class SearchActivity extends ActionBarActivity {
         super.onPause();
         // Logs 'app deactivate' App Event.
     }
+
 
 }
