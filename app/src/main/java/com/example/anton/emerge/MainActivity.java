@@ -38,6 +38,7 @@ public class MainActivity extends ActionBarActivity {
     public static String picUri;
     public static String firstName;
     public static String lastName;
+    public static boolean inDB = false;
 
     //instatiate Kairos
     public static Kairos myKairos = new Kairos();
@@ -95,6 +96,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onSuccess(String response) {
                 if (response.contains(userId)) {
+                    inDB = true;
                     Intent homeIntent = new Intent(MainActivity.this, HomePage.class);
                     homeIntent.putExtra("picURI", picUri);
                     startActivityForResult(homeIntent, request_code);

@@ -34,19 +34,27 @@ public class Camera extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera);
+        if(MainActivity.inDB) {
+            MainActivity.inDB = false;
+            setContentView(R.layout.activity_camera);
 
 
-        button_1 = (Button) findViewById(R.id.button1);
+            button_1 = (Button) findViewById(R.id.button1);
 
-        button_1.setOnClickListener(new View.OnClickListener() {
+            button_1.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View arg0) {
-                Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
-                cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
-            }
-        });
+                public void onClick(View arg0) {
+                    Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
+                    cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                }
+            });
+        }
+        else{
+            Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
+            cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+            startActivityForResult(cameraIntent, CAMERA_REQUEST);
+        }
     }
 
 
