@@ -6,7 +6,7 @@ Sociable lets you add new friends on Facebook instantly with just a photo. It in
 
 Find the app at this link:
 
-[sociableapp.club](sociableapp.club)
+[sociableapp.club](http://www.sociableapp.club)
 
 Da Programmers AKA JJAM
 ---------------------
