@@ -1,26 +1,19 @@
 package com.example.anton.emerge;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Random;
 
 
 
@@ -106,6 +99,7 @@ public class Camera extends Activity {
 
 
                 Intent cameraIntent = new Intent(this, Congrats.class);
+                cameraIntent.putExtra("BitmapImage", photo);
                 startActivity(cameraIntent);
             }
             super.onActivityResult(requestCode, resultCode, data);

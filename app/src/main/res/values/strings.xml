@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">EMerge</string>
-
+    <string name="kairos_app_id">80562c6a</string>
+    <string name="kairos_app_key">2071f3dadfdf30b78a73577dc167acb8</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="facebook_app_id">900735483301563</string>

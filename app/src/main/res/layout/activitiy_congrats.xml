@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Congrats! You are now ready to find friends with sociable"
+            android:text="Congrats! You are now ready to find friends with Sociable!"
             android:id="@+id/textView"
             android:textAlignment="center"
             android:layout_alignParentTop="true"

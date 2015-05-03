@@ -1,14 +1,22 @@
 package com.example.anton.emerge;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.facebook.appevents.AppEventsLogger;
+import com.kairos.KairosListener;
+
+import org.json.JSONException;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by anton on 5/2/2015.
@@ -22,14 +30,62 @@ public class Congrats extends ActionBarActivity {
         setContentView(R.layout.activitiy_congrats);
 
 
-    }
 
+    //Kairos code
+    Intent intent = getIntent();
+    Bitmap image = (Bitmap) intent.getParcelableExtra("BitmapImage");
+    String subjectId = MainActivity.userId;
+    String galleryId = "friends";
+    String selector = "FULL";
+    String multipleFaces = "false";
+    String minHeadScale = "0.25";
+
+        // Create an instance of the KairosListener
+        KairosListener listener = new KairosListener() {
+
+            @Override
+            public void onSuccess(String response) {
+                // your code here!
+                Log.d("KAIROS DEMO", response);
+                Toast.makeText(getApplicationContext(), "THIS BITCH WORKED!!! =) " + MainActivity.userLink.toString(),
+                        Toast.LENGTH_LONG).show();
+
+/* chrome navigation
+                Intent intent = new Intent(Intent.ACTION_VIEW, MainActivity.userLink);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setPackage("com.android.chrome");
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException ex) {
+                    // Chrome browser presumably not installed so allow user to choose instead
+                    intent.setPackage(null);
+                    startActivity(intent);
+                }
+*/
+            }
+
+            @Override
+            public void onFail(String response) {
+                // your code here!
+                Log.d("KAIROS DEMO", response);
+                Toast.makeText(getApplicationContext(), "THIS BITCH FAILED!!! =)",
+                        Toast.LENGTH_LONG).show();
+            }
+        };
+try
+{
+    MainActivity.myKairos.enroll(image, subjectId, galleryId, selector, multipleFaces, minHeadScale, listener);
+}
+catch(JSONException e1){}catch(UnsupportedEncodingException e){}
+
+}
 
     public void addDonation(View view) {
         Intent intent = new Intent(this, HomePage.class);
         startActivity(intent);
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
