@@ -1,7 +1,8 @@
-**Sociable** will blow your mind with Kairos and Facebook.
+**Sociable** will blow your mind.
 
 ### What it does
-Sociable allows for people to find each others Facebook profiles with something as simple as a photograph. This app integrates Facebook Login, Facebook Graph API, and Kairos.
+
+Sociable lets you add new friends on Facebook instantly with just a photo. It integrates Facebook Login, Facebook Graph API, and Kairos facial recognition to provide a smooth yet exhilarating experience.
 
 Find the app at this link:
 
