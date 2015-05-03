@@ -2,7 +2,7 @@
 
 ### What it does
 
-Sociable lets you add new friends on Facebook instantly with just a photo. It integrates Facebook Login, Facebook Graph API, and Kairos facial recognition to provide a smooth yet exhilarating experience.
+Sociable lets you add new friends on Facebook instantly with just a photo. It integrates Facebook Login, Facebook Web API, and Kairos facial recognition to provide a smooth yet exhilarating experience.
 
 Find the app at this link:
 
