@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.facebook.appevents.AppEventsLogger;
 
@@ -14,19 +15,21 @@ import com.facebook.appevents.AppEventsLogger;
  */
 public class HomePage extends ActionBarActivity {
 
+    TextView profile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        profile = (TextView) findViewById(R.id.profile);
+        profile.setText(MainActivity.firstName + MainActivity.lastName);
     }
 
     public void addFriend(View view){
         Intent i = new Intent(this, Camera.class);
         startActivity(i);
     }
-
-
-
 
 
     @Override

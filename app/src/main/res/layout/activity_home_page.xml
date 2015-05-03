@@ -12,6 +12,7 @@
 
 
 
+
     <LinearLayout
         android:id="@+id/other_views"
         android:layout_width="match_parent"
@@ -21,21 +22,17 @@
         android:padding="5dp" >
 
         <TextView
-            android:id="@+id/name"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:gravity="left"
-            android:text="Home Page"
-            android:textColor="@color/white"
-            android:textSize="30dp" />
-
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Profile"
+            android:id="@+id/profile" />
 
         <ImageButton
             android:id="@+id/imageButton1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/add_friend_adjusted"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/add_friend"
             android:background="@android:color/transparent"
             android:onClick="addFriend"/>
 

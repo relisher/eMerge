@@ -1,8 +1,13 @@
 package com.example.anton.emerge;
 
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -50,7 +55,26 @@ public class MainActivity extends ActionBarActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         mCallbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_main);
-        setTitle("LoginExample Cool App");
+
+        if (!isNetworkAvailable()) {
+            try {
+                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+
+                alertDialog.setTitle("Info");
+                alertDialog.setMessage("Internet not available, Cross check your internet connectivity and try again");
+                alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+
+                    }
+                });
+
+                alertDialog.show();
+            } catch (Exception e) {
+                Log.d("", "Show Dialog: " + e.getMessage());
+            }
+        }
 
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("user_friends");
@@ -88,6 +112,15 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+
     private void startNewIntent(Profile elUsero) {
 
         // Create an instance of the KairosListener
@@ -100,12 +133,12 @@ public class MainActivity extends ActionBarActivity {
                     Intent homeIntent = new Intent(MainActivity.this, HomePage.class);
                     homeIntent.putExtra("picURI", picUri);
                     startActivityForResult(homeIntent, request_code);
+                } else {
+                    Log.d("KAIROS DEMO", response);
+                    Intent cameraIntent = new Intent(MainActivity.this, CameraInit.class);
+                    cameraIntent.putExtra("picURI", picUri);
+                    startActivityForResult(cameraIntent, request_code);
                 }
-                else{
-                Log.d("KAIROS DEMO", response);
-                Intent cameraIntent = new Intent(MainActivity.this, Camera.class);
-                cameraIntent.putExtra("picURI",picUri );
-                startActivityForResult(cameraIntent, request_code);}
             }
 
             @Override
