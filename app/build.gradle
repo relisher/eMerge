@@ -23,7 +23,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
-    compile files('C:/Users/Josh/StudioProjects/eMerge/libs/KairosSDK.jar')
+    compile files('/home/arelin/Projects/emerge/emerge/libs/KairosSDK.jar')
 }
 
 repositories

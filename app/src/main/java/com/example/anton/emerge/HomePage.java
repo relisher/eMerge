@@ -56,7 +56,7 @@ public class HomePage extends Activity {
     }
 
    public void galleryFriend(View view){
-       Intent i = new Intent(this, Camera.class);
+       Intent i = new Intent(this, Gallery.class);
        startActivity(i);
    }
 
