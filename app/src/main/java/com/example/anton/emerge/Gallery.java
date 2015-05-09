@@ -2,111 +2,97 @@ package com.example.anton.emerge;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-
-import android.provider.MediaStore;
+import android.util.Log;
+import android.view.Gravity;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.kairos.KairosListener;
 
-import android.util.Log;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
 import org.json.JSONException;
 
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 
-
-/**
- * Created by arelin on 5/6/15.
- */
 public class Gallery extends Activity {
 
-    private static Uri mCapturedImageURI;
-    private String selectedImagePath;
-    KairosListener listener;
-    private Uri outputFileUri;
-    private static int RESULT_LOAD_IMAGE = 1;
-    ImageView iv;
 
+    // this is the action code we use in our intent,
+    // this way we know we're looking at the response from our own action
+    private static final int SELECT_PICTURE = 1;
 
-
-
-    Uri myPicture = null;
-    Button buttonLoadImage;
-
-    /** Called when the activity is first created. */
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent i = new Intent(
-                Intent.ACTION_PICK,
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-        startActivityForResult(i, RESULT_LOAD_IMAGE);
-
-        listener = new KairosListener() {
-
-            @Override
-            public void onSuccess(String response) {
-                Intent hp = new Intent(Gallery.this, HomePage.class);
-                startActivity(hp);
-                Log.d("KAIROS DEMO", response);
-            }
-
-            @Override
-            public void onFail(String response) {
-                // your code here!
-                Toast.makeText(getApplicationContext(), "Failed: " + response,
-                        Toast.LENGTH_LONG).show();
-                Log.d("KAIROS DEMO", response);
-            }
-        };
+        // Start the Intent
+        startActivityForResult(galleryIntent, SELECT_PICTURE);
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_PICTURE) {
+                KairosListener listener = new KairosListener() {
+                    @Override
+                    public void onSuccess(String s) {
+                        Toast.makeText(getApplicationContext(), "Success " + s,
+                                Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(Gallery.this, HomePage.class);
+                        startActivity(i);
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Bitmap photo = null;
-        super.onActivityResult(requestCode, resultCode, data);
+                    }
 
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                    @Override
+                    public void onFail(String s) {
+                        Toast.makeText(getApplicationContext(), "Failure " + s,
+                                Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(Gallery.this, HomePage.class);
+                        startActivity(i);
+                    }
+                };
 
-            Cursor cursor = getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
+                Bitmap image = null;
+                try {
+                    image = BitmapFactory.decodeStream(getApplicationContext().getContentResolver().openInputStream(data.getData()));
+                } catch (IOException e) {
+                    Log.d("Joe", e.toString());
+                }
+                if (image == null) {
+                    Toast.makeText(getApplicationContext(), "Image DNE",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+                LinearLayout v = new LinearLayout(this);
+                ImageView ii = new ImageView(this);
+                ii.setImageBitmap(image);
+                v.addView(ii);
+                Toast toast = new Toast(getApplicationContext());
+                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setView(v);
+                toast.show();
 
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            iv.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-            cursor.close();
-
-            BitmapDrawable drawable = (BitmapDrawable) iv.getDrawable();
-            Bitmap image = drawable.getBitmap();
-
-            try
-            {
-                String subjectId = MainActivity.userId;
                 String galleryId = "friends1";
-                MainActivity.myKairos.enroll(image, subjectId, galleryId, null, null, null, listener);
+                String maxNumResults = "25";
+                try {
+                    MainActivity.myKairos.recognize(image,
+                            galleryId,
+                            null,
+                            null,
+                            null,
+                            maxNumResults,
+                            listener);
+                } catch (IOException e) {
+                    Log.d("Joe", e.toString());
+                } catch (JSONException j) {
+                    Log.d("Joe", j.toString());
+                }
             }
-            catch(JSONException e1){}catch(UnsupportedEncodingException e){}
         }
-        else {
-            Intent searchActivity = new Intent(this, SearchActivity.class);
-            searchActivity.putExtra("BitmapImage", photo);
-            startActivity(searchActivity);
-        }
-        HomePage.enroll = false;
     }
-
 }
 
 
