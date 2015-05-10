@@ -3,24 +3,19 @@ package com.example.anton.emerge;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.appevents.AppEventsLogger;
-import com.kairos.KairosListener;
 
 /**
  * Created by Josh on 5/2/2015.
  */
 public class HomePage extends Activity {
-    KairosListener listener;
     TextView profile;
-    Bitmap image;
     public static boolean enroll = false;
 
 
@@ -33,36 +28,26 @@ public class HomePage extends Activity {
         profile.setText(MainActivity.firstName + " " + MainActivity.lastName);
 
         // Create an instance of the KairosListener
-       listener = new KairosListener() {
-
-            @Override
-            public void onSuccess(String response) {
-
-            }
-
-            @Override
-            public void onFail(String response) {
-                // your code here!
-                Log.d("KAIROS DEMO", response);
-            }
-        };
     }
 
 
 
     public void addFriend(View view){
         Intent i = new Intent(this, Camera.class);
+        //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
 
    public void galleryFriend(View view){
        Intent i = new Intent(this, Gallery.class);
+       //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
        startActivity(i);
    }
 
     public void updatePhoto(View view){
         enroll = true;
         Intent cam = new Intent(this, Camera.class);
+        //cam.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(cam);
 
     }

@@ -93,6 +93,7 @@ public class SearchActivity extends Activity {
             }
 
             Intent homeIntent = new Intent(this, HomePage.class);
+            homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
             //homeIntent.putExtra("picURI", "x");
             //startActivityForResult(homeIntent, 6);

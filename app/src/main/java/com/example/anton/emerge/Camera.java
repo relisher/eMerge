@@ -36,6 +36,7 @@ public class Camera extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
             Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
+            cameraIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
             startActivityForResult(cameraIntent, CAMERA_REQUEST);
 
@@ -45,6 +46,7 @@ public class Camera extends Activity {
             @Override
             public void onSuccess(String response) {
                 Intent hp = new Intent(Camera.this, HomePage.class);
+                hp.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(hp);
                 Log.d("KAIROS DEMO", response);
             }

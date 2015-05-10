@@ -44,6 +44,7 @@ public class Gallery extends Activity {
                         Toast.makeText(getApplicationContext(), "Success " + s,
                                 Toast.LENGTH_LONG).show();
                         Intent i = new Intent(Gallery.this, HomePage.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
 
                     }
@@ -53,6 +54,7 @@ public class Gallery extends Activity {
                         Toast.makeText(getApplicationContext(), "Failure " + s,
                                 Toast.LENGTH_LONG).show();
                         Intent i = new Intent(Gallery.this, HomePage.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                     }
                 };
