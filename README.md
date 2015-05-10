@@ -13,7 +13,7 @@ Da Programmers AKA JJAM
 Just a bunch of highschoolers having fun
 
 
-- [**Joe Azar-Williams**] (https://www.linkedin.com/pub/joe-azar-williams/19/430/bb) <flatflop@gmail.com>
+- [**Joe Azar-Williams**] (https://stackexchange.com/users/2540065/azar) <flatflop@gmail.com>
 - [**Josh Hellerstein**] (https://www.linkedin.com/pub/josh-hellerstein/7b/628/252) <jhellerstein96@gmail.com>
 - [**Anton Relin**](https://www.twitter.com/russianrelish) <arelin@sas.upenn.edu>
 - [**Matt Liang**] (https://facebook.com/themattliang) <matthewl97@yahoo.com>
