@@ -35,6 +35,9 @@ public class Gallery extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
+                Log.d("Joe",data.getData().getPath());
+                Toast.makeText(getApplicationContext(), "filler",
+                        Toast.LENGTH_LONG).show();
                 KairosListener listener = new KairosListener() {
                     @Override
                     public void onSuccess(String s) {
@@ -65,6 +68,7 @@ public class Gallery extends Activity {
                             Toast.LENGTH_LONG).show();
                     return;
                 }
+
                 LinearLayout v = new LinearLayout(this);
                 ImageView ii = new ImageView(this);
                 ii.setImageBitmap(image);

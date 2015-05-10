@@ -80,6 +80,7 @@ public class MainActivity extends Activity {
         loginButton.setReadPermissions("user_friends");
         loginButton.setReadPermissions("email");
         LoginManager.getInstance().logOut(); //ensures that whenever we start the app we're logged out
+        if(loginButton.getText().equals("Log out"))
 
         LoginManager.getInstance().registerCallback(mCallbackManager,
                 new FacebookCallback<LoginResult>() {
